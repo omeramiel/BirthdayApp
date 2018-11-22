@@ -2,6 +2,8 @@ package com.omeram.birthday;
 
 import android.app.Application;
 
+import com.omeram.birthday.di.AppInjector;
+
 import timber.log.Timber;
 
 public class BirthdayApp extends Application {
@@ -12,6 +14,7 @@ public class BirthdayApp extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        AppInjector.init(this);
     }
 
 }

@@ -4,4 +4,5 @@
     <string name="add_picture">Add picture</string>
     <string name="show_birthday_screen">Show birthday screen</string>
     <string name="select_date">Select date</string>
+    <string name="select_source">Select Source</string>
 </resources>
