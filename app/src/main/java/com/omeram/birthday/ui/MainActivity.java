@@ -2,6 +2,7 @@ package com.omeram.birthday.ui;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.omeram.birthday.R;
@@ -35,4 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 .commitNow();
     }
 
+    public void setCloseIcon(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setNavigationOnClickListener(v -> navigateToDetails());
+    }
 }

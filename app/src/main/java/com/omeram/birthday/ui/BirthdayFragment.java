@@ -43,7 +43,6 @@ public class BirthdayFragment extends Fragment {
     @BindView(R.id.ageImage)
     ImageView ageImage;
 
-
     private BirthdayViewModel birthdayViewModel;
 
     /**
@@ -61,6 +60,7 @@ public class BirthdayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.birthday_fragment, container, false);
         ButterKnife.bind(this, view);
+        ((MainActivity)getActivity()).setCloseIcon(toolbar);
         randomizeScreen();
         return view;
     }
