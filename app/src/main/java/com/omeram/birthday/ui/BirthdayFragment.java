@@ -7,6 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.omeram.birthday.R;
+import com.omeram.birthday.model.Birthday;
+import com.omeram.birthday.viewmodel.BirthdayViewModel;
+import com.omeram.birthday.vo.AgeView;
+import com.omeram.birthday.vo.ScreenView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -14,11 +21,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.omeram.birthday.R;
-import com.omeram.birthday.model.Birthday;
-import com.omeram.birthday.viewmodel.BirthdayViewModel;
-import com.omeram.birthday.vo.AgeView;
-import com.omeram.birthday.vo.ScreenView;
 
 /**
  * A fragment representing the birthday
@@ -81,7 +83,7 @@ public class BirthdayFragment extends Fragment {
     private void updateUi(Birthday birthday) {
         if (birthday != null) {
             AgeView ageView = ViewUtils.convertDateToView(birthday.getDate());
-            if (ageView != null) {
+            if (ageView != null && ageView.getAgeCount() != null) {
                 ageText.setText(getString((R.string.baby_age), getString(ageView.getAgePeriod())));
                 ageImage.setImageResource(ageView.getAgeCount().getResource());
             }
