@@ -1,8 +1,9 @@
 package com.omeram.birthday.db;
 
-import java.util.Date;
-
+import android.net.Uri;
 import androidx.room.TypeConverter;
+
+import java.util.Date;
 
 public class Converters {
 
@@ -17,6 +18,20 @@ public class Converters {
             return null;
         } else {
             return date.getTime();
+        }
+    }
+
+    @TypeConverter
+    public String fromUri(Uri uri) {
+        return uri == null ? null : uri.getPath();
+    }
+
+    @TypeConverter
+    public Uri toUri(String path) {
+        if (path == null) {
+            return null;
+        } else {
+            return Uri.parse(path);
         }
     }
 }

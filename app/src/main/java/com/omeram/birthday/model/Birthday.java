@@ -1,10 +1,11 @@
 package com.omeram.birthday.model;
 
-import java.util.Date;
-
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Date;
 
 @Entity
 public class Birthday {
@@ -16,7 +17,7 @@ public class Birthday {
 
     private Date date;
 
-    private String picturePath;
+    private Uri pictureUri;
 
     public Birthday(int id, @NonNull String name, Date date) {
         this.id = id;
@@ -49,11 +50,11 @@ public class Birthday {
         this.date = date;
     }
 
-    public String getPicturePath() {
-        return picturePath;
+    public Uri getPictureUri() {
+        return pictureUri;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setPictureUri(Uri pictureUri) {
+        this.pictureUri = pictureUri;
     }
 }

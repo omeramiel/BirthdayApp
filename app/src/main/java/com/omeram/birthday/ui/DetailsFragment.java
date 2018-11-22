@@ -11,7 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.omeram.birthday.R;
@@ -26,19 +35,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
-
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * A fragment which sets the birthday details
+ */
 public class DetailsFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private static final int REQUEST_TAKE_PICTURE = 0;
@@ -62,7 +63,6 @@ public class DetailsFragment extends Fragment implements DatePickerDialog.OnDate
     Button showBirthdayButton;
 
     private BirthdayViewModel mViewModel;
-    private Uri mImageUri;
     private Date mDate;
 
     static DetailsFragment newInstance() {
@@ -123,7 +123,9 @@ public class DetailsFragment extends Fragment implements DatePickerDialog.OnDate
 
     @OnClick(R.id.showBirthdayButton)
     void onShowBirthdayButtonClicked() {
-        mViewModel.setBirthdayDetails(nameText.getText().toString(), mDate, mImageUri);
+        mViewModel.setBirthdayDetails(nameText.getText().toString(), mDate);
+//        mViewModel.setBirthdayPicture(mImageUri);
+        ((MainActivity) getActivity()).navigateToBirthday();
     }
 
     @Override
@@ -138,7 +140,7 @@ public class DetailsFragment extends Fragment implements DatePickerDialog.OnDate
         switch (requestCode) {
             case REQUEST_CHOOSE_FROM_GALLERY:
                 if (resultCode == RESULT_OK) {
-                    mImageUri = data.getData();
+                    mViewModel.setBirthdayPicture(data.getData());
                 }
                 break;
         }
@@ -165,10 +167,11 @@ public class DetailsFragment extends Fragment implements DatePickerDialog.OnDate
     private void capturePictureFromCamera() {
         File dir = getContext().getFilesDir();
         File output = new File(dir, PICTURE_FILENAME);
-        mImageUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".provider", output);
+        Uri imageUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".provider", output);
         Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        takePicture.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+        takePicture.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(takePicture, REQUEST_TAKE_PICTURE);
+        mViewModel.setBirthdayPicture(imageUri);
     }
 
     private void pickPictureFromGalley() {
